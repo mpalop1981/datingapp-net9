@@ -10,9 +10,12 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 {
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddCors();
 
 var app = builder.Build();
 
+app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod()
+.WithOrigins("http://localhost:4200", "https://localhost:4200"));
 // Configure the HTTP request pipeline.
 app.MapControllers();
 
